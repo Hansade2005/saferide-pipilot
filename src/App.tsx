@@ -22,6 +22,10 @@ function App() {
  <Route path="/signup" element={<SignupPage />} />
  <Route path="/ride-history" element={<RideHistoryPage />} />
  <Route path="/track-ride/:rideId" element={<RideTrackingPage />} />
+ <Route path="/login" element={<LoginPage />} />
+ <Route path="/signup" element={<SignupPage />} />
+ <Route path="/ride-history" element={<RideHistoryPage />} />
+ <Route path="/track-ride/:rideId" element={<RideTrackingPage />} />
  {/* Add more routes here as needed */}
  </Routes>
  </main>

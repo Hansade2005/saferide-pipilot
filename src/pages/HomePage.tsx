@@ -192,7 +192,7 @@ const HomePage: React.FC = () => {
  ${currentRide.price.toFixed(2)}
  </p>
  <p className="text-sm text-gray-500 dark:text-gray-400">
- {currentRide.distance.toFixed1)} km • {currentRide.duration.toFixed(0)} min
+ {currentRide.distance.toFixed(1)) km • {currentRide.duration.toFixed(0)} min
  </p>
  </div>
  </div>

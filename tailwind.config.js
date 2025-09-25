@@ -5,7 +5,12 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+ borderColor: theme => ({
+ ...theme('colors'),
+ 'border': '#e5e7eb', // Define your custom border color
+ }),
+ },
   },
   plugins: [],
 }

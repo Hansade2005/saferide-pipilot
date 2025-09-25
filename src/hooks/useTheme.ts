@@ -13,16 +13,19 @@ import { useState, useEffect, createContext, useContext } from 'react';
 // Create context with undefined default value
  const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-// Theme provider component
- export function ThemeProvider({ children }: { children: React.ReactNode }) {
+// Theme provider component (logic only - no JSX)
+ export function ThemeProviderLogic() {
  // Initialize theme state with localStorage or default to 'system'
  const [theme, setTheme] = useState<Theme>(() => {
  try {
  if (typeof window !== 'undefined') {
- return (localStorage.getItem('theme') as Theme) || 'system';
+ const stored = localStorage.getItem('theme');
+ if (stored === 'light' || stored === 'dark' || stored === 'system') {
+ return stored;
+ }
  }
  } catch (error) {
- console.error('Error reading theme from localStorage:', error);
+ // Silently handle localStorage errors (non-breaking)
  }
  return 'system';
  });
@@ -41,7 +44,7 @@ import { useState, useEffect, createContext, useContext } from 'react';
  if (theme === 'system') {
  resolved = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
  } else {
- resolved = theme as 'light' | 'dark';
+ resolved = theme;
  }
 
  // Update state and apply theme classes
@@ -52,7 +55,7 @@ import { useState, useEffect, createContext, useContext } from 'react';
  // Save theme to localStorage
  localStorage.setItem('theme', theme);
  } catch (error) {
- console.error('Error updating theme:', error);
+ // Silently handle theme update errors (non-breaking)
  }
  };
 
@@ -71,11 +74,7 @@ import { useState, useEffect, createContext, useContext } from 'react';
  return () => mediaQuery.removeEventListener('change', handleChange);
  }, [theme]);
 
- return (
- <ThemeContext.Provider value={{ theme, setTheme, resolvedTheme }}>
- {children}
- </ThemeContext.Provider>
- );
+ return { theme, setTheme, resolvedTheme };
 }
 
 // Custom hook for using theme context
@@ -86,3 +85,6 @@ import { useState, useEffect, createContext, useContext } from 'react';
  }
  return context;
 }
+
+// Export context for provider implementation elsewhere
+ export { ThemeContext };
